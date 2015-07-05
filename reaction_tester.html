@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reaction Tester</title>
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+</head>
+<style>
+
+	body{
+		font-family: "Raleway";
+		width: 100%;
+	}
+	#box{
+		width: 200px;
+		height: 200px;
+		background-color: red;
+		display: none;
+		position: relative;
+	}
+	p{
+		padding-left: 50px;
+	}
+
+	.rules{
+		width:300px;
+		height: 200px;
+		margin: 0 auto;
+		border: 1px solid #999;
+		color: #333;
+		border-radius: 10%;
+		position: relative;
+		top: 200px;
+		display: block;
+	}
+
+	.stop{
+		padding: 10px;
+		float: right;
+	}
+
+	.time_p{
+		display: none;
+		margin-top: 30px;
+		padding-left: 30px;
+	}
+
+	.header{
+		border: 1px solid #999;
+		width: 100%;
+		padding: 5px;
+	}
+
+	.shortestime{
+		text-align: center;
+		display: none;
+		position: relative;
+		left: 60px;
+		margin-top: 30px;
+	}
+
+</style>
+<body>
+<div class="rules" id="rules">
+<center><h2>REACTION TESTER</h2></center>
+<p>Race the time by pressing the circles or squares as quickly as you can! </p>
+<center><button type="button" name="play" onclick="startbox()">PLAY</button></center>
+</div>
+
+<b><span class="time_p" id="time_p">Your time: <span id="time"></span></span></b>
+<b><span class="shortestime" id="shortestime">Fastest Response: <span id="fastest"></span></span></b>
+<div id="box"></div>
+<script type="text/javascript">
+
+	var shortest_time = 1000;
+ 	var clickedTime;
+ 	var createdTime;
+ 	var reaction;
+	
+ 	function getRandomColor(){
+ 		var letters = '0123456789ABCDEF'.split('');
+ 		var color = '#';
+ 		for (var i=0;i<6;i++){
+ 			color+=letters[Math.round(Math.random()*15)];
+ 		}
+ 		return color;
+ 	}
+
+
+	function makeBox(){ 
+
+		var time= Math.random();
+		time=time*5000; //Math.floor(Math.Random()*5000);
+
+		setTimeout(function(){
+			if(Math.random()>0.5){
+		document.getElementById("box").style.borderRadius = "100px";
+		}
+		else{
+			document.getElementById("box").style.borderRadius ="0";
+		}
+
+		var top = Math.random();
+		top = top*400;
+		var left = Math.random();
+		left= left*500;
+		
+		document.getElementById("box").style.top = top+"px";
+		document.getElementById("box").style.left = left+"px";
+		document.getElementById("box").style.backgroundColor= getRandomColor();	
+		document.getElementById("box").style.display = "block";
+		createdTime = Date.now();
+		},time);
+		
+	}
+
+	document.getElementById("box").onclick=function(){
+	clickedTime = Date.now();	
+	reaction = (clickedTime - createdTime)/1000;
+
+	document.getElementById("time").innerHTML = reaction;
+	if(reaction<shortest_time){
+		shortest_time = reaction;
+	}
+	document.getElementById("fastest").innerHTML = shortest_time;
+	this.style.display="none";
+	makeBox();
+	}
+	
+	document.getElementById("")
+
+	function startbox(){
+		// alert("Hi");
+		document.getElementById("rules").style.display = "none";
+		document.getElementById("time_p").style.display = "inline";
+		document.getElementById("shortestime").style.display = "inline";
+		makeBox();
+	}
+	// makeBox();
+</script>
+</body>
+</html>
